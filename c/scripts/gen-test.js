@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs/promises');
 
 const TEST_PER_FILE = 144;
-const HEADER_FILE = path.join(__dirname, '../test/gen-data.h');
+const HEADER_FILE = path.join(__dirname, '../test/gen-data.c');
 const DATA_DIR = path.join(__dirname, '../../data/whoTook');
 
 let testCases = undefined;
@@ -43,7 +43,7 @@ for (let arg of process.argv) {
   const file = await fs.open(HEADER_FILE, 'w');
 
   await file.writeFile(getHeaders());
-  await file.writeFile(structHeader());
+  await file.writeFile(structHeader(data.length));
 
   for (let i = 0; i < data.length; i++) {
     await file.writeFile(generateTest(data[i], i));
@@ -174,14 +174,14 @@ function generateTest(data, i) {
 
 function getHeaders() {
   return `
-#include <assert.h>
-#include <stdio.h>
-#include "test.h"
+#include "gen-data.h"
 `;
 }
 
-function structHeader() {
+function structHeader(n) {
   return `
+long unsigned int STRESS_TESTS_N = ${n};
+
 _Pragma("GCC diagnostic push")
 _Pragma("GCC diagnostic ignored \\"-Wsign-conversion\\"")
 test_data_entry_t STRESS_TESTS[] = {\n`

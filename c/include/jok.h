@@ -55,4 +55,10 @@ int jk_who_took(
     int first_card_index
 );
 
+int jk_who_took_brl(
+    jk_played_card_t *played_cards,
+    jk_card_color trump_color,
+    int first_card_index
+);
+
 #endif // JOK_TYPES_H

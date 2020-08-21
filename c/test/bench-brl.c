@@ -18,7 +18,7 @@ main(void) {
 
     for (int j = 0; j < entry.no_cases; j++) {
       test_data_case_t tcase = entry.cases[j];
-      int res = jk_who_took(
+      int res = jk_who_took_brl(
           entry.cards,
           tcase.trump_color,
           tcase.first_card_index

@@ -5,7 +5,7 @@
 
 int
 main(void) {
-  for (long unsigned int i = 0; i < ARRAY_SIZE(STRESS_TESTS); i++) {
+  for (long unsigned int i = 0; i < STRESS_TESTS_N; i++) {
     test_data_entry_t entry = STRESS_TESTS[i];
 
     printf("Running test: %s\n", entry.name);
