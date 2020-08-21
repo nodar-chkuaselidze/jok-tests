@@ -45,7 +45,7 @@ bench_brl_OBJS := $(bench_brl_BIN_SRCS:%c=%o)
 bench_brl_DEPS := $(wildcard $(bench_brl_OBJS:%=%.d))
 
 %.o: %.c
-	$(CC) $(CFLAGS) -MD -MP -MF $(LDFLAGS) "$@.d" -c $< -o $@ 
+	$(CC) $(CFLAGS) -MD -MP -MF "$@.d" -c $< -o $@ $(LDFLAGS) 
 
 include $(libjok_DEPS)
 include $(test_DEPS)
