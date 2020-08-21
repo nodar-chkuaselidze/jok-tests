@@ -42,9 +42,6 @@ bench_DEPS := $(wildcard $(bench_OBJS:%=%.d))
 %.o: %.c
 	$(CC) $(CFLAGS) -MD -MP -MF "$@.d" -o $@ -c $<
 
-build:
-	mkdir -p $(BUILD_DIR)
-
 include $(libjok_DEPS)
 include $(test_DEPS)
 include $(stress_test_DEPS)
@@ -52,6 +49,9 @@ include $(bench_DEPS)
 
 $(libjok_a): $(libjok_OBJS) build
 	$(AR) -crs $(libjok_a) $(libjok_OBJS)
+
+build:
+	mkdir -p $(BUILD_DIR)
 
 $(test_BIN): $(test_OBJS) $(libjok_a)
 	$(CC) $(CFLAGS) -o $@ $^
