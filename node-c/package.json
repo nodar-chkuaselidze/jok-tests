@@ -1,0 +1,46 @@
+{
+  "name": "node-jok",
+  "version": "0.0.0",
+  "description": "Node bindings for libjok.",
+  "main": "dist/jok.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodar-chkuaselidze/node-jok.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nodar-chkuaselidze/node-jok/issues"
+  },
+  "homepage": "https://github.com/nodar-chkuaselidze/node-jok#readme",
+  "scripts": {
+    "install": "node-gyp-build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "jok"
+  ],
+  "author": "Nodari Chkuaselidze",
+  "license": "MIT",
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "/test/.*\\.(ts|tsx|js)$"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.1",
+    "@babel/types": "^7.11.0",
+    "@types/jest": "^26.0.10",
+    "jest": "^26.4.0",
+    "ts-jest": "^26.2.0",
+    "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "napi-macros": "^2.0.0",
+    "node-gyp-build": "^4.2.3"
+  }
+}

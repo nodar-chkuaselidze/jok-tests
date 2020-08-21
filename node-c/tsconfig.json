@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "types": ["node", "jest"],
+    "lib": ["es2020"],
+    "module": "commonjs",
+    "target": "ES6"
+  },
+  "exclude": ["test/**/*.test.ts"],
+  "include": ["**/*.ts"]
+}
