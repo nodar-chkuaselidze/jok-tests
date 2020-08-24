@@ -16,8 +16,7 @@ libjok_SRCS = ./src/who-took.c ./src/who-took-brl.c
 libjok_OBJS := $(libjok_SRCS:./src/%.c=$(BUILD_OBJ_DIR)/%.o)
 libjok_DEPS := $(wildcard $(libjok_OBJS:%=%.d))
 
-#test:
-#  echo $(libjok_OBJS)
+.PHONY: all clean
 
 $(libjok_wasm): $(BUILD_DIR) $(libjok_OBJS)
 	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -o $(libjok_wasm) $(libjok_OBJS)
@@ -34,10 +33,7 @@ $(BUILD_OBJ_DIR): $(BUILD_DIR)
 	mkdir $(BUILD_OBJ_DIR)
 
 all: $(libjok_wasm)
-	@echo "Done."
 
 clean:
 	rm -f $(libjok_wasm)
 	rm -f $(libjok_OBJS)
-
-.PHONY: all clean test
