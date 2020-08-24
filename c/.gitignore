@@ -1,4 +1,4 @@
-gen-data.h
+gen-data.c
 *.o
 *.o.d
 *.h.gch

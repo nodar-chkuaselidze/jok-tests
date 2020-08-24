@@ -14,6 +14,8 @@ libjok_a = $(BUILD_DIR)/libjok.a
 
 # Data generation flags.
 DATA_GEN_FLAGS = --test-cases=$(TEST_CASES_N) --test-name=$(TEST_NAME)
+DATA_GEN_SRC = $(TEST_DIR)/gen-data.c
+DATA_GEN_OBJ = $(BUILD_TOBJ_DIR)/gen-data.o
 
 # Compiler and linker configs.
 WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
@@ -77,20 +79,20 @@ $(BUILD_TOBJ_DIR): $(BUILD_OBJ_DIR)
 $(test_BIN): $(test_OBJS) $(libjok_a)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(stress_test_BIN): test/gen-data.o $(stress_test_OBJS) $(libjok_a)
+$(stress_test_BIN): $(DATA_GEN_OBJ) $(stress_test_OBJS) $(libjok_a)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(bench_BIN): test/gen-data.o $(bench_OBJS) $(libjok_a)
+$(bench_BIN): $(DATA_GEN_OBJ) $(bench_OBJS) $(libjok_a)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-$(bench_brl_BIN): test/gen-data.o $(bench_brl_OBJS) $(libjok_a)
+$(bench_brl_BIN): $(DATA_GEN_OBJ) $(bench_brl_OBJS) $(libjok_a)
 	$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 
-test/gen-data.c:
+$(DATA_GEN_SRC):
 	node scripts/gen-test.js $(DATA_GEN_FLAGS)
 
-test/gen-data.o: test/gen-data.c
-	$(CC) $(CFLAGS) -c test/gen-data.c -o $@ $(LDFLAGS)
+$(DATA_GEN_OBJ): $(DATA_GEN_SRC)
+	$(CC) $(CFLAGS) -c $< -o $@ $(LDFLAGS)
 
 all: $(libjok_a) $(test_BIN) $(stress_test_BIN) $(bench_BIN) $(bench_brl_BIN)
 
@@ -111,5 +113,4 @@ clean:
 	rm -f $(libjok_DEPS) $(test_DEPS) $(stress_test_DEPS) $(bench_DEPS) $(bench_brl_DEPS)
 
 clean_all: clean
-	rm -f test/gen-data.c
-	rm -f test/gen-data.o
+	rm -f $(DATA_GEN_SRC) $(DATA_GEN_OBJ)
