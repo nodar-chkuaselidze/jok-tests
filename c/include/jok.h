@@ -4,6 +4,14 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef __EMSCRIPTEN__
+#  include <emscripten.h>
+#  define JK_EXPORT EMSCRIPTEN_KEEPALIVE
+#else
+#  define JK_EXPORT
+#endif
+
+
 typedef enum {
   JK_HEARTS = 0,
   JK_DIAMONDS = 1,
@@ -49,13 +57,13 @@ struct jk_played_card_s {
 };
 
 // API
-int jk_who_took(
+JK_EXPORT int jk_who_took(
     jk_played_card_t *played_cards,
     jk_card_color trump_color,
     int first_card_index
 );
 
-int jk_who_took_brl(
+JK_EXPORT int jk_who_took_brl(
     jk_played_card_t *played_cards,
     jk_card_color trump_color,
     int first_card_index

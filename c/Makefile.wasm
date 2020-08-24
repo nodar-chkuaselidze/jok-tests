@@ -1,0 +1,43 @@
+#
+# WASM build targets.
+# This build is using emscripten to provide libc.
+#
+
+BUILD_DIR = ./build.wasm
+BUILD_OBJ_DIR = $(BUILD_DIR)/obj
+
+libjok_wasm = $(BUILD_DIR)/libjok.wasm
+
+WASM_CC=emcc
+CFLAGS := $(CFLAGS) -O3 -std=c99 -D_GNU_SOURCE -Iinclude/
+EMCC_FLAGS := --no-entry
+
+libjok_SRCS = ./src/who-took.c ./src/who-took-brl.c
+libjok_OBJS := $(libjok_SRCS:./src/%.c=$(BUILD_OBJ_DIR)/%.o)
+libjok_DEPS := $(wildcard $(libjok_OBJS:%=%.d))
+
+#test:
+#  echo $(libjok_OBJS)
+
+$(libjok_wasm): $(BUILD_DIR) $(libjok_OBJS)
+	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -o $(libjok_wasm) $(libjok_OBJS)
+
+$(BUILD_OBJ_DIR)/%.o: ./src/%.c $(BUILD_OBJ_DIR)
+	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -c $< -o $@ $(LDFLAGS)
+
+include $(libjok_DEPS)
+
+$(BUILD_DIR):
+	mkdir $(BUILD_DIR)
+
+$(BUILD_OBJ_DIR): $(BUILD_DIR)
+	mkdir $(BUILD_OBJ_DIR)
+
+all: $(libjok_wasm)
+	@echo "Done."
+
+clean:
+	rm -f $(libjok_wasm)
+	rm -f $(libjok_OBJS)
+
+.PHONY: all clean test
