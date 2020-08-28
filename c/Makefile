@@ -52,13 +52,13 @@ bench_brl_DEPS := $(wildcard $(bench_brl_OBJS:%=%.d))
 
 .PHONY: all check check_stress check_all clean clean_all
 
-$(libjok_a): $(libjok_OBJS) $(BUILD_DIR)
+$(libjok_a): $(libjok_OBJS) | $(BUILD_DIR)
 	$(AR) -crs $(libjok_a) $(libjok_OBJS)
 
-$(BUILD_OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(BUILD_OBJ_DIR)
+$(BUILD_OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_OBJ_DIR)
 	$(CC) $(CFLAGS) -MD -MP -MF "$@.d" -c $< -o $@ $(LDFLAGS)
 
-$(BUILD_TOBJ_DIR)/%.o: $(TEST_DIR)/%.c $(BUILD_TOBJ_DIR)
+$(BUILD_TOBJ_DIR)/%.o: $(TEST_DIR)/%.c | $(BUILD_TOBJ_DIR)
 	$(CC) $(CFLAGS) -MD -MP -MF "$@.d" -c $< -o $@ $(LDFLAGS)
 
 include $(libjok_DEPS)
@@ -70,10 +70,10 @@ include $(bench_brl_DEPS)
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(BUILD_OBJ_DIR): $(BUILD_DIR)
+$(BUILD_OBJ_DIR): | $(BUILD_DIR)
 	mkdir -p $(BUILD_OBJ_DIR)
 
-$(BUILD_TOBJ_DIR): $(BUILD_OBJ_DIR)
+$(BUILD_TOBJ_DIR): | $(BUILD_OBJ_DIR)
 	mkdir -p $(BUILD_TOBJ_DIR)
 
 $(test_BIN): $(test_OBJS) $(libjok_a)

@@ -18,10 +18,10 @@ libjok_DEPS := $(wildcard $(libjok_OBJS:%=%.d))
 
 .PHONY: all clean
 
-$(libjok_wasm): $(BUILD_DIR) $(libjok_OBJS)
+$(libjok_wasm): $(libjok_OBJS) | $(BUILD_DIR)
 	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -o $(libjok_wasm) $(libjok_OBJS)
 
-$(BUILD_OBJ_DIR)/%.o: ./src/%.c $(BUILD_OBJ_DIR)
+$(BUILD_OBJ_DIR)/%.o: ./src/%.c | $(BUILD_OBJ_DIR)
 	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -c $< -o $@ $(LDFLAGS)
 
 include $(libjok_DEPS)
@@ -29,7 +29,7 @@ include $(libjok_DEPS)
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
-$(BUILD_OBJ_DIR): $(BUILD_DIR)
+$(BUILD_OBJ_DIR): | $(BUILD_DIR)
 	mkdir -p $(BUILD_OBJ_DIR)
 
 all: $(libjok_wasm)
