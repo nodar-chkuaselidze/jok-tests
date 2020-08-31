@@ -22,7 +22,7 @@ WARNINGS := -Wall -Wextra -pedantic -Wshadow -Wpointer-arith -Wcast-align \
 			-Wwrite-strings -Wmissing-prototypes -Wmissing-declarations \
 			-Wredundant-decls -Wnested-externs -Winline \
 			-Wuninitialized -Wconversion -Wstrict-prototypes
-CFLAGS := $(CFLAGS) -O3 -std=c99 -D_GNU_SOURCE $(WARNINGS) -Iinclude/
+CFLAGS := -O3 -std=c99 -D_GNU_SOURCE $(WARNINGS) -Iinclude/ $(CFLAGS)
 LDFLAGS := $(LDFLAGS)
 
 # Library file
