@@ -28,7 +28,9 @@ LDFLAGS := $(LDFLAGS)
 # Library file
 
 # Sources
-libjok_SRCS = $(SRC_DIR)/who-took.c $(SRC_DIR)/who-took-brl.c
+libjok_SRCS = $(SRC_DIR)/who-took.c \
+							$(SRC_DIR)/who-took-brl.c \
+							$(SRC_DIR)/who-took-wasm.c
 test_BIN_SRCS = $(TEST_DIR)/test.c
 stress_test_BIN_SRCS = $(TEST_DIR)/stress-test.c
 bench_BIN_SRCS = $(TEST_DIR)/bench.c

@@ -9,20 +9,22 @@ BUILD_OBJ_DIR = $(BUILD_DIR)/obj
 libjok_wasm = $(BUILD_DIR)/libjok.wasm
 
 WASM_CC=emcc
-CFLAGS := -std=c99 -D_GNU_SOURCE -Iinclude/ $(CFLAGS)
+CFLAGS := -Os -std=c99 -D_GNU_SOURCE -Iinclude/ $(CFLAGS)
 EMCC_FLAGS := --no-entry
 
-libjok_SRCS = ./src/who-took.c ./src/who-took-brl.c
+libjok_SRCS = ./src/who-took.c \
+							./src/who-took-brl.c \
+							./src/who-took-wasm.c
 libjok_OBJS := $(libjok_SRCS:./src/%.c=$(BUILD_OBJ_DIR)/%.o)
 libjok_DEPS := $(wildcard $(libjok_OBJS:%=%.d))
 
 .PHONY: all clean
 
 $(libjok_wasm): $(libjok_OBJS) | $(BUILD_DIR)
-	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -o $(libjok_wasm) $(libjok_OBJS)
+	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -o $@ $(libjok_OBJS)
 
 $(BUILD_OBJ_DIR)/%.o: ./src/%.c | $(BUILD_OBJ_DIR)
-	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -c $< -o $@ $(LDFLAGS)
+	$(WASM_CC) $(CFLAGS) $(EMCC_FLAGS) -c $< -o $@
 
 include $(libjok_DEPS)
 

@@ -69,4 +69,22 @@ JK_EXPORT int jk_who_took_brl(
     int first_card_index
 );
 
+JK_EXPORT jk_played_card_t *
+jk_create_played_card(
+  const jk_card_color card_color,
+  const jk_card_level card_level,
+  const jk_card_color jk_card_color,
+  const bool jok_want
+);
+
+JK_EXPORT int
+jk_who_took_wasm(
+  jk_played_card_t *played_card1,
+  jk_played_card_t *played_card2,
+  jk_played_card_t *played_card3,
+  jk_played_card_t *played_card4,
+  jk_card_color trump_color,
+  int first_card_index
+);
+
 #endif // JOK_TYPES_H
