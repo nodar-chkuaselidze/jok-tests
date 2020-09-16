@@ -27,6 +27,9 @@ that it could be.
   - We could write custom malloc for the project ?
   - Create API that will receive many i32 args instead of PTRs making this
   malloc free.
+  - We can create custom section in memory to store temproray data, because we
+  know it will be in sync ? (but not sure about cache/miss, and resulting native
+  code performance)
 
 ### Notes
 
