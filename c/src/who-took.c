@@ -87,7 +87,7 @@ jk_who_took(
   return maxIndex;
 }
 
-inline bool
+static bool
 is_joker_card(jk_played_card_t played) {
   if (played.card.level != JK_06)
     return false;
@@ -95,7 +95,7 @@ is_joker_card(jk_played_card_t played) {
   return played.card.color == JK_SPADES || played.card.color == JK_CLUBS;
 }
 
-inline jk_card_color
+static jk_card_color
 get_first_color(jk_played_card_t first_card) {
   if (is_joker_card(first_card)) {
     return first_card.joker_action.color;
